@@ -68,6 +68,9 @@ p {
 #flickr {
 	color: #666;
 }
+#flickr span {
+	color: #ff0084;
+}
 #flickr a {
 	color: #0063DC;
 	font-weight: bold;
