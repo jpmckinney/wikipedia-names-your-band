@@ -61,11 +61,11 @@ form label {
 p {
 	margin: 1em 0;
 }
-p#footer {
-	margin-top: -45px;
+#google {
+	margin-top: -37px;
 	float: right;
 }
-img.github {
+#github {
 	position: absolute;
 	top: 0;
 	right: 0;
