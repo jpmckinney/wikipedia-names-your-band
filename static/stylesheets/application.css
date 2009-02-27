@@ -1,0 +1,64 @@
+html {
+	padding: 1em;
+}
+h1 {
+	font-size: 200%;
+}
+h2 {
+	color: #666;
+}
+sup {
+	vertical-align: super;
+}
+
+button {
+	background: transparent;
+	border: none;
+	cursor: pointer;
+}
+button.picnik {
+	padding: 5px;
+	border: 1px solid #dedede;
+	border-top: 1px solid #eee;
+	border-left: 1px solid #eee;
+	background: #f5f5f5;
+	color: #529214;
+	font-size: 150%;
+}
+button:hover {
+    border: 1px solid #c6d880;
+    background: #e6efc2;
+    color: #529214;
+}
+
+
+form {
+	width: 600px;
+}
+form * {
+	font-size: 100%;
+}
+form ul li {
+	padding: 1em 0;
+}
+form div.half_container {
+	padding: 0;
+}
+form div {
+	float: left;
+}
+form button {
+	float: left;
+}
+form label {
+	clear: left;
+}
+
+p {
+	margin: 1em 0;
+}
+img.github {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
