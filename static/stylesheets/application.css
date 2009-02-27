@@ -16,16 +16,20 @@ button {
 	border: none;
 	cursor: pointer;
 }
-button.picnik {
-	padding: 5px;
+a.picnik {
+	padding: 4px;
 	border: 1px solid #dedede;
 	border-top: 1px solid #eee;
 	border-left: 1px solid #eee;
 	background: #f5f5f5;
 	color: #529214;
 	font-size: 150%;
+	text-decoration: none;
 }
-button:hover {
+a.picnik img {
+	margin: 0 -5px -9px 0;
+}
+a.picnik:hover {
     border: 1px solid #c6d880;
     background: #e6efc2;
     color: #529214;
@@ -41,13 +45,13 @@ form * {
 form ul li {
 	padding: 1em 0;
 }
+form ul li button {
+	float: left;
+}
 form div.half_container {
 	padding: 0;
 }
 form div {
-	float: left;
-}
-form button {
 	float: left;
 }
 form label {
@@ -56,6 +60,10 @@ form label {
 
 p {
 	margin: 1em 0;
+}
+p#footer {
+	margin-top: -45px;
+	float: right;
 }
 img.github {
 	position: absolute;
