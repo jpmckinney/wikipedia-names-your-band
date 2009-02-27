@@ -16,15 +16,20 @@ $.query = function() {
 
 $(function() {
 	params = $.query()
-	cover = $('<img />').attr('src', params.file).prependTo('#cover')
-	$('<meta />').attr('name', 'title').attr('content', params.title).appendTo('head')
-	$('<link />').attr('rel', 'image_src').attr('content', params.file).appendTo('head')
+	anchor = $('<a />').attr('href', params.file).prependTo('#cover')
+	cover = $('<img />').attr('src', params.file).prependTo('#cover a')
+	$.get(
+		'/fetch?u=' + encodeURIComponent('http://is.gd/api.php?longurl=' + encodeURIComponent(location.href)),
+		function(data) {
+			url = data
+		}
+	)
 	$('#email').click(function() {
-		return addthis_open(this, 'email', '[URL]', params.title)
+		return addthis_open(this, 'email', url, '[TITLE]')
 	})
 	$('#share').hover(
 		function() {
-			return addthis_open(this, '', '[URL]', params.title)
+			return addthis_open(this, '', url, '[TITLE]')
 		},
 		function() {
 			addthis_close()

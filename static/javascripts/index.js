@@ -3,10 +3,10 @@ var picnikParams = {
 	_apikey: '8a74cebc7377d3d8da46d15a8974d1f3',
 	_exclude: 'in',
 	_page: '/create/text',
-	_export: 'http://localhost:8080/share.html',
+	_export: 'http://wnyb.slashpoundbang.com/share.html',
 	_export_title: 'Save Album Cover',
 	_export_agent: 'browser',
-	_close_target: 'http://localhost:8080',
+	_close_target: 'http://wnyb.slashpoundbang.com',
 	_host_name: 'Wikipedia Names Your Band'
 }
 
@@ -22,9 +22,11 @@ $.artist = function() {
 	)
 }
 // use fetch.py to avoid "Access to restricted URI denied" exception
+// $.album is slowest because we need to create and search a DOM
+// add a random number to the query string to avoid Google cache
 $.album = function() {
 	$.get(
-		'/fetch?u=' + encodeURIComponent('http://www.quotationspage.com/random.php3'),
+		'/fetch?u=' + encodeURIComponent('http://www.quotationspage.com/random.php3?' + Math.floor(Math.random() * 9999)),
 		function(data) {
 			// remove period, extract last six words of quotation, change to lowercase
 			words = $(data).find('a[title^=Click]:last').html().replace(/.$/, '').split(' ')
@@ -49,7 +51,6 @@ $.artwork = function() {
 }
 
 $(function() {
-	// album is slowest because we need to create and search a DOM
 	$.album()
 	$.artist()
 	$.artwork()
@@ -69,7 +70,6 @@ $(function() {
 		href = 'http://www.picnik.com/service/?'
 		picnikParams._import = $('#artwork img').attr('src')
 		picnikParams._title = $('#artist').html()
-		picnikParams.title = $('#artist').html() + ' - ' + $('#album').html()
 		for (var key in picnikParams) {
 			href += key + '=' + encodeURIComponent(picnikParams[key]) + '&'
 		}

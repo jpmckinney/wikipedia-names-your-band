@@ -1,5 +1,6 @@
 html {
 	padding: 1em;
+	font-family: arial;
 }
 h1 {
 	font-size: 200%;
@@ -9,6 +10,9 @@ h2 {
 }
 sup {
 	vertical-align: super;
+}
+a {
+	text-decoration: none;
 }
 
 button {
@@ -60,6 +64,17 @@ form label {
 
 p {
 	margin: 1em 0;
+}
+#flickr {
+	color: #666;
+}
+#flickr a {
+	color: #0063DC;
+	font-weight: bold;
+}
+#flickr a:hover {
+	background: #0063DC;
+	color: #fff;
 }
 #google {
 	margin-top: -37px;
