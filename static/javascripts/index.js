@@ -3,10 +3,10 @@ var picnikParams = {
 	_apikey: '8a74cebc7377d3d8da46d15a8974d1f3',
 	_exclude: 'in',
 	_page: '/create/text',
-	_export: 'http://wnyb.slashpoundbang.com',
+	_export: 'http://localhost:8080/share.html',
 	_export_title: 'Save Album Cover',
 	_export_agent: 'browser',
-	_close_target: 'http://wnyb.slashpoundbang.com',
+	_close_target: 'http://localhost:8080',
 	_host_name: 'Wikipedia Names Your Band'
 }
 
@@ -49,37 +49,31 @@ $.artwork = function() {
 }
 
 $(function() {
-	position = window.location.search.indexOf('file')
-	if (position >= 0) {
-		src = window.location.search.substr(position + 5)
-		cover = $('<img />').attr('src', unescape(src))
-		$('form').replaceWith(cover)
-	} else {
-		// album is slowest because we need to create and search a DOM
-		$.album()
+	// album is slowest because we need to create and search a DOM
+	$.album()
+	$.artist()
+	$.artwork()
+	$('button.artist').click(function() {
 		$.artist()
+		return false
+	})
+	$('button.album').click(function() {
+		$.album()
+		return false
+	})
+	$('button.artwork').click(function() {
 		$.artwork()
-		$('button.artist').click(function() {
-			$.artist()
-			return false
-		})
-		$('button.album').click(function() {
-			$.album()
-			return false
-		})
-		$('button.artwork').click(function() {
-			$.artwork()
-			return false
-		})
-		$('a.picnik').click(function() {
-			href = 'http://www.picnik.com/service/?'
-			picnikParams._import = $('#artwork img').attr('src')
-			picnikParams._title = $('#artist').html()
-			for (var key in picnikParams) {
-				href += key + '=' + encodeURIComponent(picnikParams[key]) + '&'
-			}
-			window.open(href)
-			return false
-		})
-	}
+		return false
+	})
+	$('a.picnik').click(function() {
+		href = 'http://www.picnik.com/service/?'
+		picnikParams._import = $('#artwork img').attr('src')
+		picnikParams._title = $('#artist').html()
+		picnikParams.title = $('#artist').html() + ' - ' + $('#album').html()
+		for (var key in picnikParams) {
+			href += key + '=' + encodeURIComponent(picnikParams[key]) + '&'
+		}
+		window.open(href)
+		return false
+	})
 })
