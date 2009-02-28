@@ -16,8 +16,8 @@ $.artist = function() {
 		'http://en.wikipedia.org/w/api.php?action=query&list=random&rnnamespace=0&format=json&callback=?',
 		function(data) {
 			// remove disambiguations, e.g. (novel), (actor), (disambiguation), etc.
-			artist = data.query.random[0].title.replace(/\s+\(.+?\)/, '')
-			$('#artist').html(artist)
+			html = data.query.random[0].title.replace(/\s+\(.+?\)/, '')
+			$('#artist').html(html)
 		}
 	)
 }
@@ -30,8 +30,8 @@ $.album = function() {
 		function(data) {
 			// remove period, extract last six words of quotation, change to lowercase
 			words = $(data).find('a[title^=Click]:last').html().replace(/.$/, '').split(' ')
-			album = words.slice(Math.max(words.length - 6, 0), words.length).join(' ')
-			$('#album').html(album.toLowerCase())
+			html = words.slice(Math.max(words.length - 6, 0), words.length).join(' ')
+			$('#album').html(html.toLowerCase())
 		}
 	)
 }
@@ -44,8 +44,8 @@ $.artwork = function() {
 		function(data) {
 			photo = data.photos.photo[0]
 			src = 'http://farm' + photo.farm + '.static.flickr.com/' + photo.server + '/' + photo.id + '_' + photo.secret + '.jpg'
-			artwork = $('<img />').attr('src', src)
-			$('#artwork').html(artwork)
+			html = $('<img />').attr('src', src)
+			$('#artwork').html(html)
 		}
 	)
 }
