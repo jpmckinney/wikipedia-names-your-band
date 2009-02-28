@@ -2,11 +2,27 @@ import urllib2, urlparse, html5lib
 from BeautifulSoup import BeautifulSoup
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
+from google.appengine.api.urlfetch import DownloadError
 
 class Fetch(webapp.RequestHandler):
 	def get(self):
-		url = self.request.get('u')
-		response = urllib2.urlopen(url)
+		if 'u' not in self.request.GET:
+			self.error(400) # Bad Request
+			self.response.out.write('The request must contain the parameter u.')
+			return
+
+		try:
+			url = self.request.get('u')
+			response = urllib2.urlopen(url)
+		except ValueError:
+			self.error(400) # Bad Request
+			self.response.out.write('The parameter u is not a valid URI.')
+			return
+		except DownloadError:
+			self.error(400) # Bad Request
+			self.response.out.write('The parameter u is a nonexistent URI.')
+			return
+
 		# convert relative to absolute urls to avoid 404 errors in Google logs
 		parser = html5lib.HTMLParser(tree=html5lib.treebuilders.getTreeBuilder('beautifulsoup'))
 		soup = parser.parse(response)
