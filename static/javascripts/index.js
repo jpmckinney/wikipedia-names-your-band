@@ -54,6 +54,12 @@ $(function() {
 	$.album()
 	$.artist()
 	$.artwork()
+	$('button.all').click(function() {
+		$.album()
+		$.artist()
+		$.artwork()
+		return false
+	})
 	$('button.artist').click(function() {
 		$.artist()
 		return false
