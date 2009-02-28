@@ -22,10 +22,26 @@ $(function() {
 		'/fetch?u=' + encodeURIComponent('http://is.gd/api.php?longurl=' + encodeURIComponent(location.href)),
 		function(data) {
 			url = data
+			$('#short_url').val(url)
 		}
 	)
+	$('#short_url').click(function() {
+		this.select()
+		this.focus()
+	})
+	$('#short_url').select(function() {
+		this.select()
+		this.focus()
+	})
+	$('#short_url').keyup(function() {
+		this.select()
+		this.focus()
+	})
 	$('#email').click(function() {
 		return addthis_open(this, 'email', url, '[TITLE]')
+	})
+	$('#share').click(function() {
+		return addthis_sendto()
 	})
 	$('#share').hover(
 		function() {

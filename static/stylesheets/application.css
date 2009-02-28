@@ -65,6 +65,9 @@ form label {
 p {
 	margin: 1em 0;
 }
+#actions {
+	color: #666;
+}
 #flickr {
 	color: #666;
 }

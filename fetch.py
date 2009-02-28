@@ -1,4 +1,4 @@
-import urllib2, urlparse, html5lib
+import re, urllib2, urlparse, html5lib
 from BeautifulSoup import BeautifulSoup
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
@@ -7,7 +7,7 @@ from google.appengine.api.urlfetch import DownloadError
 class Fetch(webapp.RequestHandler):
 	def get(self):
 		if 'u' not in self.request.GET:
-			self.error(400) # Bad Request
+			self.error(400)
 			self.response.out.write('The request must contain the parameter u.')
 			return
 
@@ -15,22 +15,27 @@ class Fetch(webapp.RequestHandler):
 			url = self.request.get('u')
 			response = urllib2.urlopen(url)
 		except ValueError:
-			self.error(400) # Bad Request
+			self.error(400)
 			self.response.out.write('The parameter u is not a valid URI.')
 			return
 		except DownloadError:
-			self.error(400) # Bad Request
+			self.error(400)
 			self.response.out.write('The parameter u is a nonexistent URI.')
 			return
 
-		# convert relative to absolute urls to avoid 404 errors in Google logs
-		parser = html5lib.HTMLParser(tree=html5lib.treebuilders.getTreeBuilder('beautifulsoup'))
-		soup = parser.parse(response)
-		for e in soup(src=True):
-			e['src'] = urlparse.urljoin(url, e['src'])
-		for e in soup(href=True):
-			e['href'] = urlparse.urljoin(url, e['href'])
-		self.response.out.write(str(soup))
+		data = response.read()
+		# don't add html tags to a text response
+		if re.search('<head>', data):
+			# convert relative to absolute urls to avoid 404 errors in Google logs
+			parser = html5lib.HTMLParser(tree=html5lib.treebuilders.getTreeBuilder('beautifulsoup'))
+			soup = parser.parse(data)
+			for e in soup(src=True):
+				e['src'] = urlparse.urljoin(url, e['src'])
+			for e in soup(href=True):
+				e['href'] = urlparse.urljoin(url, e['href'])
+			self.response.out.write(str(soup))
+		else:
+			self.response.out.write(data)
 
 application = webapp.WSGIApplication([('/fetch', Fetch)], debug=True)
 
