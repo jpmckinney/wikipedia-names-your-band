@@ -23,22 +23,19 @@ button {
 button.all {
 	color: #999;
 	font-size: 75%;
-	vertical-align: middle;
 }
-a.picnik {
-	padding: 4px;
+button.picnik {
 	border: 1px solid #dedede;
 	border-top: 1px solid #eee;
 	border-left: 1px solid #eee;
 	background: #f5f5f5;
 	color: #529214;
 	font-size: 150%;
-	text-decoration: none;
 }
-a.picnik img {
-	margin: 0 -5px -9px 0;
+button.picnik img {
+	margin: 0 -5px -10px 0;
 }
-a.picnik:hover {
+button.picnik:hover {
     border: 1px solid #c6d880;
     background: #e6efc2;
     color: #529214;
@@ -70,26 +67,26 @@ form label {
 p {
 	margin: 1em 0;
 }
-#actions {
+#canvas {
+	width: 500px;
+	height: 500px;
+}
+#addthis {
 	color: #666;
 }
 #flickr {
 	color: #666;
 }
+#flickr a {
+	color: #0063dc;
+	font-weight: bold;
+}
 #flickr span {
 	color: #ff0084;
 }
-#flickr a {
-	color: #0063DC;
-	font-weight: bold;
-}
 #flickr a:hover {
-	background: #0063DC;
+	background: #0063dc;
 	color: #fff;
-}
-#google {
-	margin-top: -37px;
-	float: right;
 }
 #github {
 	position: absolute;

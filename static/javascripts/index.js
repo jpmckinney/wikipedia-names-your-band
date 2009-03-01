@@ -43,8 +43,9 @@ $.artwork = function() {
 		'http://api.flickr.com/services/rest/?api_key=509624220dfe5d4bc3d7ab02cfa03650&method=flickr.interestingness.getList&per_page=1&page=' + Math.floor(Math.random() * 500) + '&format=json&jsoncallback=?',
 		function(data) {
 			photo = data.photos.photo[0]
+			href = 'http://www.flickr.com/photos/' + photo.owner + '/' + photo.id
 			src = 'http://farm' + photo.farm + '.static.flickr.com/' + photo.server + '/' + photo.id + '_' + photo.secret + '.jpg'
-			html = $('<img />').attr('src', src)
+			html = $('<a />').attr('href', href).append($('<img />').attr('src', src))
 			$('#artwork').html(html)
 		}
 	)
@@ -72,7 +73,7 @@ $(function() {
 		$.artwork()
 		return false
 	})
-	$('a.picnik').click(function() {
+	$('button.picnik').click(function() {
 		href = 'http://www.picnik.com/service/?'
 		picnikParams._import = $('#artwork img').attr('src')
 		picnikParams._title = $('#artist').html()

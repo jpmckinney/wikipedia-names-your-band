@@ -16,8 +16,8 @@ $.query = function() {
 
 $(function() {
 	params = $.query()
-	anchor = $('<a />').attr('href', params.file).prependTo('#cover')
-	cover = $('<img />').attr('src', params.file).prependTo('#cover a')
+	$('<a />').attr('href', params.file).prependTo('#cover')
+	$('<img />').attr('src', params.file).prependTo('#cover a')
 	$.get(
 		'/fetch?u=' + encodeURIComponent('http://is.gd/api.php?longurl=' + encodeURIComponent(location.href)),
 		function(data) {
