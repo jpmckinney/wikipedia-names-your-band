@@ -1,15 +1,5 @@
-// http://www.picnik.com/info/api
-var picnikParams = {
-	_apikey: '8a74cebc7377d3d8da46d15a8974d1f3',
-	_exclude: 'in',
-	_page: '/create/text',
-	_export: 'http://wnyb.slashpoundbang.com/share.html',
-	_export_title: 'Save Album Cover',
-	_export_agent: 'browser',
-	_close_target: 'http://wnyb.slashpoundbang.com',
-	_host_name: 'Wikipedia Names Your Band'
-}
-
+// store photo.id for "I'm feeling lucky"
+var photo_id
 // http://en.wikipedia.org/w/api.php
 $.artist = function() {
 	$.getJSON(
@@ -47,10 +37,12 @@ $.artwork = function() {
 			src = 'http://farm' + photo.farm + '.static.flickr.com/' + photo.server + '/' + photo.id + '_' + photo.secret + '.jpg'
 			html = $('<a />').attr('href', href).append($('<img />').attr('src', src))
 			$('#artwork').html(html)
+			photo_id = photo.id
 		}
 	)
 }
 
+// http://www.picnik.com/info/api
 $(function() {
 	$.album()
 	$.artist()
@@ -74,13 +66,29 @@ $(function() {
 		return false
 	})
 	$('button.picnik').click(function() {
-		href = 'http://www.picnik.com/service/?'
-		picnikParams._import = $('#artwork img').attr('src')
-		picnikParams._title = $('#artist').html()
-		for (var key in picnikParams) {
-			href += key + '=' + encodeURIComponent(picnikParams[key]) + '&'
-		}
-		window.open(href)
+		q = $.query.set({
+			_apikey: '8a74cebc7377d3d8da46d15a8974d1f3',
+			_exclude: 'in',
+			_page: '/create/text',
+			_import: $('#artwork img').attr('src'),
+			_export: 'http://wnyb.slashpoundbang.com/share.html',
+			_export_title: 'Save Album Cover',
+			_export_agent: 'browser',
+			_close_target: 'http://wnyb.slashpoundbang.com',
+			_host_name: 'Wikipedia Names Your Band',
+			_title: $('#artist').html()
+		})
+		window.open('http://www.picnik.com/service/?' + q)
+		return false
+	})
+	$('button.lucky').click(function() {
+		q = $.query.set({
+			artwork: $('#artwork img').attr('src'),
+			artist: $('#artist').html(),
+			album: $('#album').html(),
+			photo_id: photo_id
+		})
+		location.href = '/svg.html?' + q
 		return false
 	})
 })

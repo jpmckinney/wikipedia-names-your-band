@@ -6,6 +6,8 @@ api_version: 1
 handlers:
 - url: /fetch
   script: fetch.py
+- url: /svg
+  script: svg.py
 - url: /
   static_files: static/index.html
   upload: static/index.html
