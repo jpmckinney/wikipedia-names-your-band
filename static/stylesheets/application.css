@@ -92,6 +92,10 @@ form p button:hover {
 #back {
 	font-weight: bold;
 }
+#twitter {
+	margin-top: 2.5em;
+	color: #666;
+}
 #github {
 	position: absolute;
 	top: 0;
