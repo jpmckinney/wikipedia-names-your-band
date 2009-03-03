@@ -26,12 +26,13 @@ class Fetch(webapp.RequestHandler):
 		data = response.read()
 		# don't add html tags to a text response
 		if re.search('<head>', data):
-			# convert relative to absolute urls to avoid 404 errors in Google logs
 			parser = html5lib.HTMLParser(tree=html5lib.treebuilders.getTreeBuilder('beautifulsoup'))
 			soup = parser.parse(data)
 			for e in soup(src=True):
-				e['src'] = urlparse.urljoin(url, e['src'])
+				# remove images and scripts to avoid 404 errors
+				e.extract()
 			for e in soup(href=True):
+				# convert relative to absolute urls
 				e['href'] = urlparse.urljoin(url, e['href'])
 			self.response.out.write(str(soup))
 		else:
