@@ -1,3 +1,5 @@
+// load the feeds module of the Google AJAX APIs
+google.load('feeds', '1')
 // store photo.id for "I'm feeling lucky"
 var photo_id
 // http://en.wikipedia.org/w/api.php
@@ -11,19 +13,19 @@ $.artist = function() {
 		}
 	)
 }
-// use fetch.py to avoid "Access to restricted URI denied" exception
-// $.album is slowest because we need to create and search a DOM
+// use Google AJAX API to avoid 'Access to restricted URI denied' exception
 // add a random number to the query string to avoid Google cache
+// http://code.google.com/apis/ajaxfeeds/documentation/#HelloWorld
 $.album = function() {
-	$.get(
-		'/fetch?u=' + encodeURIComponent('http://www.quotationspage.com/random.php3?' + Math.floor(Math.random() * 9999)),
-		function(data) {
+	var feed = new google.feeds.Feed('http://www.quotedb.com/quote/quote.php?action=random_quote_rss&' + Math.floor(Math.random() * 9999));
+	feed.load(function(result) {
+		if (!result.error) {
 			// remove period, extract last six words of quotation, change to lowercase
-			words = $(data).find('a[title^=Click]:last').html().replace(/.$/, '').split(' ')
+			words = result.feed.entries[0].content.replace(/"$/, '').replace(/.$/, '').split(' ')
 			html = words.slice(Math.max(words.length - 6, 0), words.length).join(' ')
 			$('#album').html(html.toLowerCase())
 		}
-	)
+	})
 }
 // http://www.flickr.com/services/api/flickr.interestingness.getList.html
 // http://www.flickr.com/services/api/response.json.html
